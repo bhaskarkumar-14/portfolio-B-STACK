@@ -25,7 +25,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="font-display text-5xl md:text-7xl lg:text-9xl font-bold tracking-tight leading-tight mb-8 text-white"
+                    className="font-display text-4xl md:text-7xl lg:text-9xl font-bold tracking-tight leading-tight mb-8 text-white"
                 >
                     We Build <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">

@@ -1,41 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
-import Hero from './components/Hero';
-import Services from './components/Services';
-
-import Portfolio from './components/Portfolio';
-import Testimonials from './components/Testimonials';
-
-import Contact from './components/Contact';
+import SEO from './components/SEO';
 import Footer from './components/Footer';
-import AdminDashboard from './components/admin/AdminDashboard';
-import AdminLeads from './components/admin/AdminLeads';
-import AdminOrders from './components/admin/AdminOrders';
-import Blog from './components/Blog';
-import BlogPost from './components/BlogPost';
-import { RevealOnScroll } from './components/RevealOnScroll';
-import { AuthProvider } from './context/AuthContext';
-import AuthContext from './context/AuthContext';
 
-// Protected Route Component
-const ProtectedRoute = ({ children, adminOnly = false }) => {
-  const { user, loading } = useContext(AuthContext);
-
-  // Simple spinner while checking auth status
-  if (loading) return <div className="min-h-screen pt-32 text-center text-white">Loading...</div>;
-
-  if (!user) {
-    window.location.href = '/login';
-    return null;
-  }
-
-  if (adminOnly && user.role !== 'admin') {
-    window.location.href = '/wallet'; // Redirect non-admins
-    return null;
-  }
-  return children;
-};
+import Home from './pages/Home';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -47,16 +19,11 @@ function AppContent() {
   }, []);
 
 
-
-  // Admin Routes (Protected)
-  if (currentPath === '/admin') return <ProtectedRoute adminOnly={true}><AdminDashboard /></ProtectedRoute>;
-  if (currentPath === '/admin/leads') return <ProtectedRoute adminOnly={true}><AdminLeads /></ProtectedRoute>;
-  if (currentPath === '/admin/orders') return <ProtectedRoute adminOnly={true}><AdminOrders /></ProtectedRoute>;
-
   // Blog Routes
   if (currentPath === '/blog') {
     return (
       <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
+        <SEO title="Our Blog | B-STACK" description="Read our latest insights on web development and design." />
         <Navbar />
         <main><Blog /></main>
         <Footer />
@@ -77,15 +44,25 @@ function AppContent() {
 
 
 
+  // Privacy Policy Route
+  if (currentPath === '/privacy') {
+    return (
+      <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
+        <SEO title="Privacy Policy | B-STACK" description="Our commitment to protecting your privacy." />
+        <Navbar />
+        <main><PrivacyPolicy /></main>
+        <Footer />
+      </div>
+    );
+  }
+
+
   // Default Home Route
   return (
     <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
+      <SEO />
       <Navbar />
-      <Hero />
-      <RevealOnScroll><Services /></RevealOnScroll>
-      <RevealOnScroll><Portfolio /></RevealOnScroll>
-      <RevealOnScroll><Testimonials /></RevealOnScroll>
-      <RevealOnScroll><Contact /></RevealOnScroll>
+      <Home />
       <Footer />
     </div>
   );
@@ -100,9 +77,13 @@ function App() {
       gestureDirection: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false,
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: true,
       touchMultiplier: 2,
     });
+
+    window.lenis = lenis; // Expose for Navbar scrolling
 
     function raf(time) {
       lenis.raf(time);
@@ -117,9 +98,9 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
+    <div className="app-container">
       <AppContent />
-    </AuthProvider>
+    </div>
   );
 }
 

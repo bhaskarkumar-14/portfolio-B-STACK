@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SEO from '../components/SEO';
 import { Calendar, User, ArrowLeft, Loader2 } from 'lucide-react';
 import { useParams } from 'react-router-dom'; // Note: In App.jsx we are not using react-router-dom fully correctly for params without complex setup. 
 // However, since we are doing manual routing, we need a wrapper to extract ID from URL.
@@ -12,21 +13,47 @@ const BlogPost = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                const res = await fetch(`http://localhost:5000/api/blog/${id}`);
-                const data = await res.json();
-                if (data.success) {
-                    setPost(data.post);
-                }
-            } catch (err) {
-                console.error("Failed to fetch blog post", err);
-            } finally {
-                setLoading(false);
+        // Mock Data Lookup - Removed dependency on localhost:5000
+        const mockPosts = [
+            {
+                _id: '1',
+                title: 'The Future of Web Design: Trends to Watch in 2026',
+                excerpt: 'Explore the latest trends in immersive 3D graphics, AI-driven layouts, and hyper-personalized user experiences shaping the web.',
+                content: `Web design is constantly evolving, and 2026 is shaping up to be a revolutionary year. We are seeing a shift towards more immersive experiences...
+                
+                1. 3D Elements: More websites are integrating lightweight 3D objects using Spline and Three.js.
+                2. AI-Driven Layouts: Interfaces that adapt to user behavior in real-time.
+                3. Dark Mode Default: Dark aesthetics are becoming the standard for premium brands.`,
+                coverImage: 'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2664&auto=format&fit=crop',
+                createdAt: new Date().toISOString(),
+                author: { name: 'Bhaskar' }
+            },
+            {
+                _id: '2',
+                title: 'Maximizing SEO: Beyond Keywords',
+                excerpt: 'Learn why technical SEO, user intent, and core web vitals are more important than keyword stuffing in the modern search landscape.',
+                content: `SEO is no longer just about keywords. Search engines are now smarter than ever...`,
+                coverImage: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2674&auto=format&fit=crop',
+                createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+                author: { name: 'Team B-STACK' }
+            },
+            {
+                _id: '3',
+                title: 'Why Speed Matters: Optimizing React Applications',
+                excerpt: 'A deep dive into code splitting, lazy loading, and memoization techniques to ensure your React apps load lightning fast.',
+                content: `Performance is key. A slow website leads to high bounce rates...`,
+                coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2669&auto=format&fit=crop',
+                createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+                author: { name: 'Bhaskar' }
             }
-        };
+        ];
 
-        if (id) fetchPost();
+        const foundPost = mockPosts.find(p => p._id === id);
+
+        if (foundPost) {
+            setPost(foundPost);
+        }
+        setLoading(false);
     }, [id]);
 
     if (loading) return (
@@ -44,6 +71,7 @@ const BlogPost = () => {
 
     return (
         <article className="min-h-screen pt-32 pb-20">
+            {post && <SEO title={post.title} description={post.excerpt} image={post.coverImage} />}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <a href="/blog" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
                     <ArrowLeft className="w-4 h-4" /> Back to Blog

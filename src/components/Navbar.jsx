@@ -61,12 +61,18 @@ export const Navbar = () => {
                 }`}>
                 <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <a href="/#home" className="flex items-center gap-2 pl-2 group">
-                        <div className="relative w-10 h-10 flex items-center justify-center">
-                            <div className="absolute inset-0 bg-primary rounded-xl rotate-0 group-hover:rotate-6 transition-transform duration-300"></div>
-                            <Code className="relative z-10 w-5 h-5 text-white" />
+                    <a href="#home" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.location.pathname === '/' || window.location.pathname === '') {
+                            window.lenis?.scrollTo('#home', { duration: 1.5 });
+                        } else {
+                            window.location.href = '/#home';
+                        }
+                    }} className="flex items-center gap-2 pl-2 group">
+                        <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded-xl">
+                            <img src="/logo.jpg" alt="B-STACK Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                         </div>
-                        <span className="font-display text-xl font-bold text-white tracking-tight group-hover:text-primary transition-colors duration-300">DevAgency</span>
+                        <span className="font-display text-xl font-bold text-white tracking-tight group-hover:text-primary transition-colors duration-300">B-STACK</span>
                     </a>
 
                     {/* Desktop Navigation */}
@@ -77,6 +83,23 @@ export const Navbar = () => {
                                 <a
                                     key={item.name}
                                     href={item.href}
+                                    onClick={(e) => {
+                                        if (item.href.startsWith('/#')) {
+                                            e.preventDefault();
+                                            const targetId = item.href.replace('/', '');
+                                            // Check if we are on the homepage or need to navigate first
+                                            if (window.location.pathname === '/' || window.location.pathname === '') {
+                                                window.lenis?.scrollTo(targetId, { duration: 1.5 });
+                                            } else {
+                                                // If on another page, let the default behavior happen (it will navigate to /#section)
+                                                // But we want to SPA navigate if possible, or force href
+                                                window.location.href = item.href;
+                                            }
+                                        } else if (item.href.startsWith('/') && !item.href.includes('#')) {
+                                            // Simple reliable navigation for pages like /blog, /privacy
+                                            window.location.href = item.href;
+                                        }
+                                    }}
                                     className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${isActive ? 'text-white' : 'text-gray-300 hover:text-white'
                                         }`}
                                 >
@@ -96,7 +119,11 @@ export const Navbar = () => {
                     {/* Right Side: CTA Button (Desktop) */}
                     <div className="hidden md:flex items-center gap-4">
                         <a
-                            href="/#contact"
+                            href="#contact"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.lenis?.scrollTo('#contact', { duration: 1.5 });
+                            }}
                             className="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 flex items-center gap-2"
                         >
                             Start Project <ArrowRight className="w-4 h-4" />

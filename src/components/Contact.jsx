@@ -115,7 +115,7 @@ const Contact = () => {
                                             type="text"
                                             required
                                             className="w-full bg-secondary/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary focus:bg-secondary/80 transition-all placeholder-gray-700"
-                                            placeholder="John"
+                                            placeholder="first name"
                                         />
                                     </div>
                                     <div>
@@ -126,7 +126,7 @@ const Contact = () => {
                                             onChange={handleChange}
                                             type="text"
                                             className="w-full bg-secondary/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary focus:bg-secondary/80 transition-all placeholder-gray-700"
-                                            placeholder="Doe"
+                                            placeholder="last name"
                                         />
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@ const Contact = () => {
                                         type="email"
                                         required
                                         className="w-full bg-secondary/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary focus:bg-secondary/80 transition-all placeholder-gray-700"
-                                        placeholder="john@example.com"
+                                        placeholder="@gmail.com"
                                     />
                                 </div>
                                 <div>
@@ -179,5 +179,4 @@ const Contact = () => {
         </section>
     );
 };
-
 export default Contact;

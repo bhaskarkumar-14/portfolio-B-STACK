@@ -1,29 +1,42 @@
 import { useState, useEffect } from 'react';
 import { Calendar, User, ArrowRight, Loader2 } from 'lucide-react';
-import { RevealOnScroll } from './RevealOnScroll';
+import { RevealOnScroll } from '../components/RevealOnScroll';
 
 const Blog = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                // In a real app, this would be an actual API call
-                // For demo/dev purposes if no backend, we might want to show dummy data, but preserving existing logic:
-                const res = await fetch('http://localhost:5000/api/blog');
-                const data = await res.json();
-                if (data.success) {
-                    setPosts(data.posts);
-                }
-            } catch (err) {
-                console.error("Failed to fetch blog posts", err);
-            } finally {
-                setLoading(false);
+        // Mock Data for frontend demo - Removed dependency on localhost:5000
+        const mockPosts = [
+            {
+                _id: '1',
+                title: 'The Future of Web Design: Trends to Watch in 2026',
+                excerpt: 'Explore the latest trends in immersive 3D graphics, AI-driven layouts, and hyper-personalized user experiences shaping the web.',
+                coverImage: 'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2664&auto=format&fit=crop',
+                createdAt: new Date().toISOString(),
+                author: { name: 'Bhaskar' }
+            },
+            {
+                _id: '2',
+                title: 'Maximizing SEO: Beyond Keywords',
+                excerpt: 'Learn why technical SEO, user intent, and core web vitals are more important than keyword stuffing in the modern search landscape.',
+                coverImage: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2674&auto=format&fit=crop',
+                createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+                author: { name: 'Team B-STACK' }
+            },
+            {
+                _id: '3',
+                title: 'Why Speed Matters: Optimizing React Applications',
+                excerpt: 'A deep dive into code splitting, lazy loading, and memoization techniques to ensure your React apps load lightning fast.',
+                coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2669&auto=format&fit=crop',
+                createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+                author: { name: 'Bhaskar' }
             }
-        };
+        ];
 
-        fetchPosts();
+        setPosts(mockPosts);
+        setLoading(false);
     }, []);
 
     return (

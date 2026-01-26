@@ -9,8 +9,9 @@ const projects = [
         category: "Web Application",
         desc: "A comprehensive digital campus solution featuring student/faculty portals and biometric attendance.",
         tags: ["React", "Node.js", "MongoDB", "Auth"],
-        image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000&auto=format&fit=crop",
-        size: "large" // Spans 2 cols
+        image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1000&auto=format&fit=crop", // Changed to a new reliable URL
+        size: "large", // Spans 2 cols
+        link: "https://pce-purnea.vercel.app/"
     },
     {
         id: 2,
@@ -18,7 +19,7 @@ const projects = [
         category: "E-Commerce",
         desc: "High-performance analytics dashboard.",
         tags: ["Next.js", "Stripe"],
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=1000&auto=format&fit=crop",
         size: "small"
     },
     {
@@ -36,7 +37,7 @@ const projects = [
         category: "Finance",
         desc: "Secure banking interface.",
         tags: ["TypeScript", "D3.js"],
-        image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1000&auto=format&fit=crop",
         size: "medium" // Full width on mobile, normal on desktop
     }
 ];
@@ -74,6 +75,7 @@ const ProjectCard = ({ project }) => {
             ref={ref}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={() => project.link && window.open(project.link, '_blank')}
             style={{
                 rotateY,
                 rotateX,
