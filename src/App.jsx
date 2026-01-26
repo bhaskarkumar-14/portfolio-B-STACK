@@ -77,8 +77,6 @@ function App() {
       gestureDirection: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smooth: true,
-      mouseMultiplier: 1,
       smoothTouch: true,
       touchMultiplier: 2,
     });
