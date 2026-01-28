@@ -1,22 +1,50 @@
 import { Mail, Phone, Send, Loader2, CheckCircle2 } from 'lucide-react';
-// import { useState } from 'react'; // Not needed with Formspree hook unless we want local resets
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-
-import { useForm, ValidationError } from '@formspree/react';
+import { API_URL } from '../config';
 
 const Contact = () => {
-    // --------------------------------------------------------
-    // TODO: Replace 'YOUR_FORMSPREE_ID' with your actual Formspree Form ID
-    // Create one at https://formspree.io
-    // --------------------------------------------------------
-    const [state, handleSubmit] = useForm("YOUR_FORMSPREE_ID");
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: ''
+    });
 
-    // We keep local state just for clearing inputs optionally, 
-    // but Formspree handles the submission data automatically if names match.
-    // However, to keep the UI consistent with existing design, we can just use the state.succeeded
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    // If the form is successfully submitted:
-    if (state.succeeded) {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = await fetch(`${API_URL}/api/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                setSuccess(true);
+                setFormData({ firstName: '', lastName: '', email: '', message: '' });
+            } else {
+                setError(data.message || 'Failed to send message.');
+            }
+        } catch (err) {
+            setError('Server error. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (success) {
         return (
             <section id="contact" className="py-20 relative overflow-hidden bg-secondary">
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
@@ -25,9 +53,9 @@ const Contact = () => {
                             <CheckCircle2 className="w-12 h-12" />
                         </div>
                         <h3 className="text-3xl font-bold text-foreground mb-2">Message Sent!</h3>
-                        <p className="text-gray-500 dark:text-gray-400">Thanks for reaching out. We'll be in touch shortly.</p>
+                        <p className="text-gray-500 dark:text-gray-400">Thanks for reaching out. We have received your message.</p>
                         <button
-                            onClick={() => window.location.reload()} // Simple reload to reset for now, or we could lift state up
+                            onClick={() => setSuccess(false)}
                             className="mt-8 text-primary hover:text-white font-medium transition-colors border-b border-primary/30 hover:border-white pb-1"
                         >
                             Send another message
@@ -86,16 +114,16 @@ const Contact = () => {
                     </div>
 
                     <div className="glass-card p-10 rounded-[2rem] border border-white/10 relative overflow-hidden shadow-2xl">
-                        {/* Form render - we handled success above with early return, so we just render form here */}
                         <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
                                     <input
                                         name="firstName"
-                                        id="firstName"
                                         type="text"
                                         required
+                                        value={formData.firstName}
+                                        onChange={handleChange}
                                         className="w-full bg-gray-100 dark:bg-secondary/50 border border-black/10 dark:border-white/10 rounded-xl px-4 py-4 text-foreground focus:outline-none focus:border-primary focus:bg-white dark:focus:bg-secondary/80 transition-all placeholder-gray-500 dark:placeholder-gray-700"
                                         placeholder="first name"
                                     />
@@ -104,8 +132,9 @@ const Contact = () => {
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Last Name</label>
                                     <input
                                         name="lastName"
-                                        id="lastName"
                                         type="text"
+                                        value={formData.lastName}
+                                        onChange={handleChange}
                                         className="w-full bg-gray-100 dark:bg-secondary/50 border border-black/10 dark:border-white/10 rounded-xl px-4 py-4 text-foreground focus:outline-none focus:border-primary focus:bg-white dark:focus:bg-secondary/80 transition-all placeholder-gray-500 dark:placeholder-gray-700"
                                         placeholder="last name"
                                     />
@@ -115,32 +144,35 @@ const Contact = () => {
                                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
                                 <input
                                     name="email"
-                                    id="email"
                                     type="email"
                                     required
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="w-full bg-gray-100 dark:bg-secondary/50 border border-black/10 dark:border-white/10 rounded-xl px-4 py-4 text-foreground focus:outline-none focus:border-primary focus:bg-white dark:focus:bg-secondary/80 transition-all placeholder-gray-500 dark:placeholder-gray-700"
                                     placeholder="@gmail.com"
                                 />
-                                <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-400 text-xs mt-1" />
                             </div>
                             <div>
                                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Message</label>
                                 <textarea
                                     name="message"
-                                    id="message"
                                     rows="4"
                                     required
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     className="w-full bg-gray-100 dark:bg-secondary/50 border border-black/10 dark:border-white/10 rounded-xl px-4 py-4 text-foreground focus:outline-none focus:border-primary focus:bg-white dark:focus:bg-secondary/80 transition-all placeholder-gray-500 dark:placeholder-gray-700 resize-none"
                                     placeholder="Tell us about your project..."
                                 ></textarea>
-                                <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-400 text-xs mt-1" />
                             </div>
+
+                            {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
                             <button
                                 type="submit"
-                                disabled={state.submitting}
+                                disabled={loading}
                                 className="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                {state.submitting ? (
+                                {loading ? (
                                     <>
                                         <Loader2 className="w-5 h-5 animate-spin" /> Sending...
                                     </>
@@ -150,11 +182,7 @@ const Contact = () => {
                                     </>
                                 )}
                             </button>
-                            {state.errors && state.errors.length > 0 && (
-                                <p className="text-red-400 text-sm text-center">Something went wrong. Please try again.</p>
-                            )}
                         </form>
-
                     </div>
                 </div>
             </div>
