@@ -2,7 +2,7 @@ import express from 'express';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import mongoose from 'mongoose'; // Fixed: Added missing import
-import Order from '../models/Order.js';
+import Order from '../models/orderModel.js';
 import Wallet from '../models/Wallet.js';
 
 const router = express.Router();

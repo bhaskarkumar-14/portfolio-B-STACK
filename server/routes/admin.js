@@ -1,7 +1,7 @@
 import express from 'express';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import Lead from '../models/Lead.js';
-import Order from '../models/Order.js';
+import Order from '../models/orderModel.js';
 import mongoose from 'mongoose';
 
 const router = express.Router();

@@ -10,16 +10,16 @@ const Footer = () => {
                             <div className="relative w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg">
                                 <img src="/logo.jpg" alt="B-STACK Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                             </div>
-                            <span className="font-display text-xl font-bold text-white tracking-tight group-hover:text-primary transition-colors">B-STACK</span>
+                            <span className="font-display text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">B-STACK</span>
                         </a>
-                        <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-                            Crafting digital experiences that merge art with technology. We build the future of the web.
+                        <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-xs">
+                            Merging art with code to build the future of the web. No templates, no shortcuts.
                         </p>
                     </div>
 
                     {/* Social Links - separate column for alignment in mobile or below text */}
                     <div className="flex flex-col gap-4">
-                        <h4 className="text-white font-semibold hidden lg:block mb-2 opacity-0">Social</h4> {/* Spacer */}
+                        <h4 className="text-foreground font-semibold hidden lg:block mb-2 opacity-0">Social</h4> {/* Spacer */}
                         <div className="flex space-x-3">
                             {[
                                 { Icon: Twitter, href: "https://x.com/Bhaskar_singh14" },
@@ -32,7 +32,7 @@ const Footer = () => {
                                     href={href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-300"
+                                    className="w-9 h-9 bg-white/5 border border-black/5 dark:border-white/5 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-primary hover:text-white transition-all duration-300"
                                 >
                                     <Icon className="w-4 h-4" />
                                 </a>
@@ -42,8 +42,8 @@ const Footer = () => {
                 </div>
 
                 <div>
-                    <h4 className="text-white font-semibold mb-6">Services</h4>
-                    <ul className="space-y-3 text-gray-400 text-sm">
+                    <h4 className="text-foreground font-semibold mb-6">Services</h4>
+                    <ul className="space-y-3 text-gray-500 dark:text-gray-400 text-sm">
                         <li><a href="#services" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#services', { duration: 1.5 }); }} className="hover:text-primary transition-colors">Web Design</a></li>
                         <li><a href="#services" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#services', { duration: 1.5 }); }} className="hover:text-primary transition-colors">App Development</a></li>
                         <li><a href="#services" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#services', { duration: 1.5 }); }} className="hover:text-primary transition-colors">SEO Optimization</a></li>
@@ -52,8 +52,8 @@ const Footer = () => {
                 </div>
 
                 <div>
-                    <h4 className="text-white font-semibold mb-6">Company</h4>
-                    <ul className="space-y-3 text-gray-400 text-sm">
+                    <h4 className="text-foreground font-semibold mb-6">Company</h4>
+                    <ul className="space-y-3 text-gray-500 dark:text-gray-400 text-sm">
                         <li><a href="#home" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#home', { duration: 1.5 }); }} className="hover:text-primary transition-colors">About Us</a></li>
                         <li><a href="#contact" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#contact', { duration: 1.5 }); }} className="hover:text-primary transition-colors">Careers</a></li>
                         <li><a href="/blog" className="hover:text-primary transition-colors">Blog</a></li>
@@ -62,16 +62,16 @@ const Footer = () => {
                 </div>
 
                 <div>
-                    <h4 className="text-white font-semibold mb-6">Newsletter</h4>
-                    <p className="text-gray-400 mb-4 text-sm">Subscribe to get the latest design trends and news.</p>
+                    <h4 className="text-foreground font-semibold mb-6">Newsletter</h4>
+                    <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm">Subscribe to get the latest design trends and news.</p>
                     <div className="flex gap-2">
-                        <input type="email" placeholder="Email" className="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white w-full text-sm focus:outline-none focus:border-primary transition-colors placeholder-gray-600" />
+                        <input type="email" placeholder="Email" className="bg-gray-100 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 py-2.5 text-foreground w-full text-sm focus:outline-none focus:border-primary transition-colors placeholder-gray-500 dark:placeholder-gray-600" />
                         <button className="bg-primary hover:bg-blue-600 text-white p-2.5 rounded-lg transition-colors">
                             <Code className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-sm">
                 <p>&copy; {new Date().getFullYear()} B-STACK. All rights reserved.</p>
@@ -81,7 +81,7 @@ const Footer = () => {
                     <a href="#" className="hover:text-gray-400 transition-colors">Cookies</a>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 };
 

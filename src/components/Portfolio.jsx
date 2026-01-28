@@ -5,19 +5,19 @@ import { useRef } from 'react';
 const projects = [
     {
         id: 1,
-        title: "University Management System",
-        category: "Web Application",
-        desc: "A comprehensive digital campus solution featuring student/faculty portals and biometric attendance.",
+        title: "Digital Campus Core",
+        category: "EdTech",
+        desc: "A complete digital nervous system for modern universities, handling everything from biometrics to grading.",
         tags: ["React", "Node.js", "MongoDB", "Auth"],
-        image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1000&auto=format&fit=crop", // Changed to a new reliable URL
-        size: "large", // Spans 2 cols
+        image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1000&auto=format&fit=crop",
+        size: "large",
         link: "https://pce-purnea.vercel.app/"
     },
     {
         id: 2,
         title: "Neon Commerce",
         category: "E-Commerce",
-        desc: "High-performance analytics dashboard.",
+        desc: "Data visualization that actually makes sense. Tracking millions in revenue with zero lag.",
         tags: ["Next.js", "Stripe"],
         image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=1000&auto=format&fit=crop",
         size: "small"
@@ -26,19 +26,19 @@ const projects = [
         id: 3,
         title: "Luxury Estate",
         category: "Real Estate",
-        desc: "Immersive 3D property showcase.",
+        desc: "Immersive 3D property showcases that make you feel like you're already home.",
         tags: ["React", "Three.js"],
         image: "https://images.unsplash.com/photo-1600596542815-e25fa1108638?q=80&w=1000&auto=format&fit=crop",
         size: "small"
     },
     {
         id: 4,
-        title: "Fintech Dashboard",
+        title: "Vault Fintech",
         category: "Finance",
-        desc: "Secure banking interface.",
+        desc: "Bank-grade security meets consumer-grade UX. Fast, fluid, and bulletproof.",
         tags: ["TypeScript", "D3.js"],
         image: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1000&auto=format&fit=crop",
-        size: "medium" // Full width on mobile, normal on desktop
+        size: "medium"
     }
 ];
 
@@ -112,7 +112,7 @@ const ProjectCard = ({ project }) => {
                         </div>
                     </div>
 
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-2 leading-tight">
                         {project.title}
                     </h3>
                     <p className="text-gray-300 text-sm md:text-base line-clamp-2 max-w-lg mb-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100 duration-500">
@@ -134,7 +134,7 @@ const ProjectCard = ({ project }) => {
 
 const Portfolio = () => {
     return (
-        <section id="portfolio" className="py-20 relative bg-dark">
+        <section id="portfolio" className="py-20 relative bg-secondary">
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
@@ -152,7 +152,7 @@ const Portfolio = () => {
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-white"
+                            className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-foreground"
                         >
                             Featured <br /> <span className="text-gray-600">Projects.</span>
                         </motion.h2>

@@ -3,43 +3,43 @@ import { motion } from 'framer-motion';
 
 const services = [
     {
-        title: "Custom Web Design",
-        desc: "Stunning, responsive websites tailored to your brand identity.",
+        title: "Bespoke Web Design",
+        desc: "Sites that stop the scroll. We design for impact, ensuring your brand looks exceptional on any screen.",
         icon: Monitor,
         color: "text-blue-400",
         bg: "bg-blue-400/10"
     },
     {
-        title: "Web App Development",
-        desc: "Complex functionality using React, Next.js, and Node.js.",
+        title: "Robust Applications",
+        desc: "From dashboards to SaaS platforms, we build the complex engine rooms that power your business logic.",
         icon: Layers,
         color: "text-emerald-400",
         bg: "bg-emerald-400/10"
     },
     {
-        title: "SEO Optimization",
-        desc: "Rank higher on Google and drive organic traffic to your business.",
+        title: "Search Dominance",
+        desc: "We don't just guess; we engineer your site to climb the ranks and get seen by the people who matter.",
         icon: Search,
         color: "text-purple-400",
         bg: "bg-purple-400/10"
     },
     {
-        title: "Backend Systems",
-        desc: "Secure API development, authentications, and database management.",
+        title: "Scalable Backends",
+        desc: "Bulletproof APIs and database architectures that handle growth without breaking a sweat.",
         icon: Server,
         color: "text-red-400",
         bg: "bg-red-400/10"
     },
     {
-        title: "Mobile Friendly",
-        desc: "Designs that look perfect on every device, from mobile to desktop.",
+        title: "Mobile First",
+        desc: "Half your traffic is mobile. We ensure they get an experience just as rich as desktop users.",
         icon: Smartphone,
         color: "text-amber-400",
         bg: "bg-amber-400/10"
     },
     {
-        title: "Maintenance",
-        desc: "Ongoing support, security updates, and performance monitoring.",
+        title: "Peace of Mind",
+        desc: "Sleep easy knowing we’re handling the security updates, backups, and performance tuning.",
         icon: Shield,
         color: "text-cyan-400",
         bg: "bg-cyan-400/10"
@@ -65,7 +65,7 @@ const Services = () => {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+                        className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6"
                     >
                         Our Expertise
                     </motion.h2>
@@ -73,7 +73,7 @@ const Services = () => {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed font-light"
+                        className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed font-light"
                     >
                         We don't just write code; we build solutions that solve real business problems.
                     </motion.p>
@@ -92,8 +92,8 @@ const Services = () => {
                             <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${service.color} bg-white/5 border border-white/5 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
                                 <service.icon className="w-8 h-8" />
                             </div>
-                            <h3 className="font-display text-2xl font-bold text-white mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
-                            <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                            <h3 className="font-display text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
+                            <p className="text-gray-500 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
                                 {service.desc}
                             </p>
                         </motion.div>

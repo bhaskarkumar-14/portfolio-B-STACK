@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Calendar, User, ArrowRight, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { RevealOnScroll } from '../components/RevealOnScroll';
 
 const Blog = () => {
@@ -7,40 +8,39 @@ const Blog = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Mock Data for frontend demo - Removed dependency on localhost:5000
-        const mockPosts = [
-            {
-                _id: '1',
-                title: 'The Future of Web Design: Trends to Watch in 2026',
-                excerpt: 'Explore the latest trends in immersive 3D graphics, AI-driven layouts, and hyper-personalized user experiences shaping the web.',
-                coverImage: 'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2664&auto=format&fit=crop',
-                createdAt: new Date().toISOString(),
-                author: { name: 'Bhaskar' }
-            },
-            {
-                _id: '2',
-                title: 'Maximizing SEO: Beyond Keywords',
-                excerpt: 'Learn why technical SEO, user intent, and core web vitals are more important than keyword stuffing in the modern search landscape.',
-                coverImage: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2674&auto=format&fit=crop',
-                createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-                author: { name: 'Team B-STACK' }
-            },
-            {
-                _id: '3',
-                title: 'Why Speed Matters: Optimizing React Applications',
-                excerpt: 'A deep dive into code splitting, lazy loading, and memoization techniques to ensure your React apps load lightning fast.',
-                coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2669&auto=format&fit=crop',
-                createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
-                author: { name: 'Bhaskar' }
-            }
-        ];
+        const fetchPosts = async () => {
+            try {
+                // Fetch from Dev.to API (tag: webdev, top recent)
+                const response = await fetch('https://dev.to/api/articles?tag=webdev&top=7&per_page=9');
+                const data = await response.json();
 
-        setPosts(mockPosts);
-        setLoading(false);
+                if (Array.isArray(data)) {
+                    // Map Dev.to fields to our internal format
+                    const formattedPosts = data.map(post => ({
+                        _id: post.id, // Use Dev.to ID
+                        title: post.title,
+                        excerpt: post.description,
+                        coverImage: post.cover_image || post.social_image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop',
+                        createdAt: post.published_at,
+                        author: { name: post.user.name },
+                        content: post.body_html // Not used in list view, but available
+                    }));
+                    setPosts(formattedPosts);
+                } else {
+                    console.error('Failed to fetch posts from Dev.to');
+                }
+            } catch (error) {
+                console.error('Error fetching blog posts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPosts();
     }, []);
 
     return (
-        <section id="blog" className="min-h-screen pt-20 pb-20 relative bg-dark">
+        <section id="blog" className="min-h-screen pt-20 pb-20 relative bg-secondary">
             {/* Background Glow */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -49,10 +49,10 @@ const Blog = () => {
                     <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">
                         Latest Insights
                     </span>
-                    <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6">
+                    <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
                         Our Blog
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed font-light">
+                    <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed font-light">
                         Thoughts on technology, design, and digital transformation.
                     </p>
                 </div>
@@ -90,20 +90,20 @@ const Blog = () => {
                                                 )}
                                             </div>
 
-                                            <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-primary transition-colors leading-tight line-clamp-2">
+                                            <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight line-clamp-2">
                                                 {post.title}
                                             </h3>
-                                            <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">
+                                            <p className="text-gray-500 dark:text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">
                                                 {post.excerpt}
                                             </p>
 
                                             <div className="mt-auto pt-6 border-t border-white/5">
-                                                <a
-                                                    href={`/blog/${post._id}`}
-                                                    className="inline-flex items-center gap-2 text-white font-semibold text-sm hover:text-primary transition-colors group/link"
+                                                <Link
+                                                    to={`/blog/${post._id}`}
+                                                    className="inline-flex items-center gap-2 text-foreground font-semibold text-sm hover:text-primary transition-colors group/link"
                                                 >
                                                     Read Article <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </article>

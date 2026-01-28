@@ -3,7 +3,7 @@ import { Shield, Lock, Eye, Server, FileText } from 'lucide-react';
 
 const PrivacyPolicy = () => {
     return (
-        <div className="pt-24 pb-16 px-6 lg:px-20 max-w-5xl mx-auto text-gray-300">
+        <div className="pt-24 pb-16 px-6 lg:px-20 max-w-5xl mx-auto text-gray-600 dark:text-gray-300">
 
             {/* Header */}
             <div className="mb-12 text-center">
@@ -12,8 +12,8 @@ const PrivacyPolicy = () => {
                         <Shield className="w-10 h-10 text-primary" />
                     </div>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Privacy Policy</h1>
-                <p className="text-lg text-gray-400">Last updated: {new Date().toLocaleDateString()}</p>
+                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Privacy Policy</h1>
+                <p className="text-lg text-gray-500 dark:text-gray-400">Last updated: {new Date().toLocaleDateString()}</p>
             </div>
 
             {/* Content Container */}
@@ -21,7 +21,7 @@ const PrivacyPolicy = () => {
 
                 {/* Introduction */}
                 <section>
-                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-3">
                         <FileText className="w-6 h-6 text-primary" />
                         Introduction
                     </h2>
@@ -34,33 +34,33 @@ const PrivacyPolicy = () => {
 
                 {/* Data Collection */}
                 <section>
-                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-3">
                         <Eye className="w-6 h-6 text-primary" />
                         Information We Collect
                     </h2>
                     <p className="mb-4">We may collect, use, store and transfer different kinds of personal data about you which we have grouped together follows:</p>
                     <ul className="list-disc pl-6 space-y-2 marker:text-primary">
-                        <li><strong className="text-white">Identity Data:</strong> includes first name, last name, username or similar identifier.</li>
-                        <li><strong className="text-white">Contact Data:</strong> includes email address and telephone numbers.</li>
-                        <li><strong className="text-white">Technical Data:</strong> includes internet protocol (IP) address, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform.</li>
-                        <li><strong className="text-white">Usage Data:</strong> includes information about how you use our website and services.</li>
+                        <li><strong className="text-foreground">Identity Data:</strong> includes first name, last name, username or similar identifier.</li>
+                        <li><strong className="text-foreground">Contact Data:</strong> includes email address and telephone numbers.</li>
+                        <li><strong className="text-foreground">Technical Data:</strong> includes internet protocol (IP) address, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform.</li>
+                        <li><strong className="text-foreground">Usage Data:</strong> includes information about how you use our website and services.</li>
                     </ul>
                 </section>
 
                 {/* How We Use Data */}
                 <section>
-                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-3">
                         <Server className="w-6 h-6 text-primary" />
                         How We Use Your Data
                     </h2>
                     <p className="mb-4">We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
                     <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-primary/30 transition-colors">
-                            <h3 className="text-lg font-semibold text-white mb-2">Service Delivery</h3>
+                        <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl border border-black/5 dark:border-white/10 hover:border-primary/30 transition-colors">
+                            <h3 className="text-lg font-semibold text-foreground mb-2">Service Delivery</h3>
                             <p className="text-sm">To provide and maintain our Service, including to monitor the usage of our Service.</p>
                         </div>
-                        <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-primary/30 transition-colors">
-                            <h3 className="text-lg font-semibold text-white mb-2">Communication</h3>
+                        <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl border border-black/5 dark:border-white/10 hover:border-primary/30 transition-colors">
+                            <h3 className="text-lg font-semibold text-foreground mb-2">Communication</h3>
                             <p className="text-sm">To contact you by email, telephone calls, SMS, or other equivalent forms of electronic communication.</p>
                         </div>
                     </div>

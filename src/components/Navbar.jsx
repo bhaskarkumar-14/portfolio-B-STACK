@@ -1,11 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Code, ArrowRight } from 'lucide-react';
+import { Menu, X, Code, ArrowRight, Sun, Moon } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+    // Theme Toggle Logic
+    useEffect(() => {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    };
 
     // Handle Scroll for Glass Effect - Optimized
     useEffect(() => {
@@ -35,7 +51,6 @@ export const Navbar = () => {
                 threshold: 0.2, // Trigger when 20% is visible
                 rootMargin: "-100px 0px -100px 0px" // Shrink the viewport box to ensure center focus
             }
-
         );
 
         sections.forEach((section) => observer.observe(section));
@@ -47,8 +62,36 @@ export const Navbar = () => {
         { name: 'Services', href: '/#services', id: 'services' },
         { name: 'Work', href: '/#portfolio', id: 'portfolio' },
         { name: 'Blog', href: '/blog', id: 'blog' },
+        { name: 'Admin', href: '/admin/login', id: 'admin' },
         { name: 'Contact', href: '/#contact', id: 'contact' },
     ];
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Helper for smooth scroll or navigation
+    const handleNavClick = (e, item) => {
+        e.preventDefault();
+
+        if (item.href.startsWith('/#')) {
+            const targetId = item.href.replace('/', '');
+            // If on home, scroll
+            if (location.pathname === '/' || location.pathname === '/index.html') {
+                window.lenis?.scrollTo(targetId, { duration: 1.5 });
+            } else {
+                // Navigate to home then scroll (since we use hash router behavior for sections)
+                // For now, simple href is safer for cross-page hash jumping, but let's try React Router way
+                navigate('/');
+                setTimeout(() => {
+                    window.lenis?.scrollTo(targetId, { duration: 1.5 });
+                }, 100);
+            }
+        } else {
+            // Standard Page Navigation
+            navigate(item.href);
+        }
+        setIsOpen(false);
+    };
 
     return (
         <nav
@@ -56,7 +99,7 @@ export const Navbar = () => {
                 }`}
         >
             <div className={`max-w-7xl mx-auto px-6 lg:px-8 transition-all duration-500 ease-in-out ${scrolled
-                ? 'glass rounded-full py-3 shadow-2xl bg-black/50 backdrop-blur-xl border border-white/10 ring-1 ring-white/5'
+                ? 'glass rounded-full py-3 shadow-2xl bg-white/10 dark:bg-black/50 backdrop-blur-xl border border-white/10 ring-1 ring-white/5'
                 : 'bg-transparent py-6'
                 }`}>
                 <div className="flex items-center justify-between">
@@ -72,7 +115,7 @@ export const Navbar = () => {
                         <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded-xl">
                             <img src="/logo.jpg" alt="B-STACK Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                         </div>
-                        <span className="font-display text-xl font-bold text-white tracking-tight group-hover:text-primary transition-colors duration-300">B-STACK</span>
+                        <span className="font-display text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">B-STACK</span>
                     </a>
 
                     {/* Desktop Navigation */}
@@ -83,24 +126,8 @@ export const Navbar = () => {
                                 <a
                                     key={item.name}
                                     href={item.href}
-                                    onClick={(e) => {
-                                        if (item.href.startsWith('/#')) {
-                                            e.preventDefault();
-                                            const targetId = item.href.replace('/', '');
-                                            // Check if we are on the homepage or need to navigate first
-                                            if (window.location.pathname === '/' || window.location.pathname === '') {
-                                                window.lenis?.scrollTo(targetId, { duration: 1.5 });
-                                            } else {
-                                                // If on another page, let the default behavior happen (it will navigate to /#section)
-                                                // But we want to SPA navigate if possible, or force href
-                                                window.location.href = item.href;
-                                            }
-                                        } else if (item.href.startsWith('/') && !item.href.includes('#')) {
-                                            // Simple reliable navigation for pages like /blog, /privacy
-                                            window.location.href = item.href;
-                                        }
-                                    }}
-                                    className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${isActive ? 'text-white' : 'text-gray-300 hover:text-white'
+                                    onClick={(e) => handleNavClick(e, item)}
+                                    className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${isActive ? 'text-white' : 'text-gray-500 hover:text-foreground'
                                         }`}
                                 >
                                     {isActive && (
@@ -118,6 +145,13 @@ export const Navbar = () => {
 
                     {/* Right Side: CTA Button (Desktop) */}
                     <div className="hidden md:flex items-center gap-4">
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-foreground transition-colors border border-white/5"
+                            aria-label="Toggle Theme"
+                        >
+                            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                        </button>
                         <a
                             href="#contact"
                             onClick={(e) => {
@@ -130,10 +164,14 @@ export const Navbar = () => {
                         </a>
                     </div>
 
-
-
                     {/* Mobile Menu Button */}
-                    <div className="flex md:hidden pr-1">
+                    <div className="flex md:hidden pr-1 gap-4">
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-foreground transition-colors border border-white/5"
+                        >
+                            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                        </button>
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="text-gray-300 hover:text-white focus:outline-none p-2"
@@ -159,7 +197,7 @@ export const Navbar = () => {
                                 <a
                                     key={item.name}
                                     href={item.href}
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={(e) => handleNavClick(e, item)}
                                     className={`block px-4 py-3 rounded-xl text-base font-medium transition-all ${activeSection === item.id
                                         ? 'bg-primary/10 text-primary border border-primary/20'
                                         : 'text-gray-400 hover:bg-white/5 hover:text-white'

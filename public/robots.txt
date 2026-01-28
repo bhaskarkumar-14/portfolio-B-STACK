@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pce-purnea.vercel.app/sitemap.xml

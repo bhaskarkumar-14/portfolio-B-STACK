@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
 import SEO from './components/SEO';
@@ -8,67 +9,29 @@ import Home from './pages/Home';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import NotFound from './pages/NotFound';
 
-function AppContent() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+// Admin Pages
+import AdminLogin from './pages/Admin/Login';
+import AdminDashboard from './pages/Admin/Dashboard';
+import CreatePost from './pages/Admin/CreatePost';
+import ProtectedRoute from './components/ProtectedRoute';
 
-  useEffect(() => {
-    const handleLocationChange = () => setCurrentPath(window.location.pathname);
-    window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
-  }, []);
-
-
-  // Blog Routes
-  if (currentPath === '/blog') {
-    return (
-      <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
-        <SEO title="Our Blog | B-STACK" description="Read our latest insights on web development and design." />
-        <Navbar />
-        <main><Blog /></main>
-        <Footer />
-      </div>
-    );
-  }
-
-  // Simple check for /blog/ID
-  if (currentPath.startsWith('/blog/') && currentPath.length > 6) {
-    return (
-      <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
-        <Navbar />
-        <main><BlogPost /></main>
-        <Footer />
-      </div>
-    );
-  }
-
-
-
-  // Privacy Policy Route
-  if (currentPath === '/privacy') {
-    return (
-      <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
-        <SEO title="Privacy Policy | B-STACK" description="Our commitment to protecting your privacy." />
-        <Navbar />
-        <main><PrivacyPolicy /></main>
-        <Footer />
-      </div>
-    );
-  }
-
-
-  // Default Home Route
+function Layout({ children, seo }) {
   return (
     <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
-      <SEO />
+      {seo && <SEO {...seo} />}
       <Navbar />
-      <Home />
+      <main>{children}</main>
       <Footer />
     </div>
   );
 }
 
+
 function App() {
+  const location = useLocation();
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -81,7 +44,7 @@ function App() {
       touchMultiplier: 2,
     });
 
-    window.lenis = lenis; // Expose for Navbar scrolling
+    window.lenis = lenis;
 
     function raf(time) {
       lenis.raf(time);
@@ -93,11 +56,49 @@ function App() {
     return () => {
       lenis.destroy();
     };
-  }, []);
+  }, []); // Run once on mount
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="app-container">
-      <AppContent />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/index.html" element={<Layout><Home /></Layout>} />
+
+        <Route path="/blog" element={
+          <Layout seo={{ title: "Our Blog | B-STACK", description: "Read our latest insights on web development and design." }}>
+            <Blog />
+          </Layout>
+        } />
+
+        <Route path="/blog/:id" element={
+          <Layout>
+            <BlogPost />
+          </Layout>
+        } />
+
+        <Route path="/privacy" element={
+          <Layout seo={{ title: "Privacy Policy | B-STACK", description: "Our commitment to protecting your privacy." }}>
+            <PrivacyPolicy />
+          </Layout>
+        } />
+
+        {/* Admin Routes (No Layout/Different Layout) */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/create-post" element={<CreatePost />} />
+        </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

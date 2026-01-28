@@ -4,14 +4,16 @@ export default {
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
+    darkMode: 'class',
     theme: {
         extend: {
             colors: {
-                primary: "#2563EB", // Royal Blue
-                secondary: "#030712", // Deepest Gray (almost black)
-                dark: "#0B0F19", // Rich Background
-                accent: "#6366F1", // Indigo
-                surface: "#111827", // Card Background
+                primary: "rgb(var(--color-primary) / <alpha-value>)",
+                secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+                dark: "rgb(var(--color-dark) / <alpha-value>)", // Main background
+                accent: "rgb(var(--color-accent) / <alpha-value>)",
+                surface: "rgb(var(--color-surface) / <alpha-value>)",
+                foreground: "rgb(var(--color-foreground) / <alpha-value>)", // Text color
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],

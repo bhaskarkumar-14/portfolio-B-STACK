@@ -9,8 +9,23 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  background-color: #030712;
+  /* Light Mode Defaults */
+  --color-primary: 37 99 235;
+  /* #2563EB */
+  --color-secondary: 243 244 246;
+  /* #F3F4F6 (gray-100) */
+  --color-dark: 255 255 255;
+  /* #FFFFFF */
+  --color-accent: 99 102 241;
+  /* #6366F1 */
+  --color-surface: 255 255 255;
+  /* #FFFFFF */
+  --color-foreground: 17 24 39;
+  /* #111827 (gray-900) */
+
+  color-scheme: light;
+  background-color: rgb(var(--color-dark));
+  color: rgb(var(--color-foreground));
   scroll-behavior: smooth;
   /* Global Smooth Scroll */
 
@@ -20,6 +35,24 @@
   -moz-osx-font-smoothing: grayscale;
   touch-action: manipulation;
   /* Improves touch response */
+}
+
+.dark {
+  /* Dark Mode Overrides (Original Values) */
+  --color-primary: 37 99 235;
+  /* #2563EB */
+  --color-secondary: 3 7 18;
+  /* #030712 */
+  --color-dark: 11 15 25;
+  /* #0B0F19 */
+  --color-accent: 99 102 241;
+  /* #6366F1 */
+  --color-surface: 17 24 39;
+  /* #111827 */
+  --color-foreground: 255 255 255;
+  /* #FFFFFF */
+
+  color-scheme: dark;
 }
 
 body {

@@ -25,7 +25,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="font-display text-4xl md:text-7xl lg:text-9xl font-bold tracking-tight leading-tight mb-8 text-white"
+                    className="font-display text-4xl md:text-7xl lg:text-9xl font-bold tracking-tight leading-tight mb-8 text-foreground"
                 >
                     We Build <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
@@ -37,7 +37,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-                    className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-14 leading-relaxed font-light"
+                    className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto mb-14 leading-relaxed font-light"
                 >
                     Transform your vision into a world-class digital experience. We craft high-performance websites and applications that drive real business growth.
                 </motion.p>
@@ -57,7 +57,7 @@ const Hero = () => {
 
                     <a
                         href="#portfolio"
-                        className="w-full sm:w-auto min-w-[200px] px-8 py-4 border border-white/10 hover:border-white/20 hover:bg-white/5 text-white rounded-full font-semibold text-lg transition-all hover:-translate-y-1"
+                        className="w-full sm:w-auto min-w-[200px] px-8 py-4 border border-black/10 dark:border-white/10 hover:border-primary/20 hover:bg-black/5 dark:hover:bg-white/5 text-foreground rounded-full font-semibold text-lg transition-all hover:-translate-y-1"
                     >
                         View Our Work
                     </a>
